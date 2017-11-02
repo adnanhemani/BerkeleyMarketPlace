@@ -10,7 +10,7 @@ RSpec.describe PostsController, type: :controller do
 
 
   describe "create action" do
-    current_user = User.superusers[5]
+    #current_user = User.superusers[5]
     #puts(current_user)
     it "creates a new post in database" do
       post :create, post: { 
@@ -99,6 +99,38 @@ RSpec.describe PostsController, type: :controller do
       expect(response).to redirect_to("/posts/" + id.to_s)
     end
   end
+  
+  describe 'searching certain item' do
+    it 'calls the model method that performs search' do
+      post :create, post: { 
+          :title => 'iClicker1 for sale', 
+          :price => '233', 
+          :description => 'Sample Post Description',
+          :category => 'item',
+          :subcategory => 'electronics',
+          :image => Rack::Test::UploadedFile.new('spec/controllers/images/doge.png', 'image/png')
+      }
+      expect(Post).to receive(:get_searched_posts).with('iclicker')
+      post 'index', {:search_terms => 'iclicker'}
+    end
+    
+    # it 'selects page for rendering' do
+    #   allow(Post).to receive(:get_searched_posts)
+    #   post :create, post: { 
+    #       :title => 'iClicker1 for sale', 
+    #       :price => '233', 
+    #       :description => 'Sample Post Description',
+    #       :category => 'item',
+    #       :subcategory => 'electronics',
+    #       :image => Rack::Test::UploadedFile.new('spec/controllers/images/doge.png', 'image/png')
+    #   }
+    #   post 'index', {:search_terms => 'iclicker'}
+    #   # expect(response).to redirect_to(root_path)
+    #   expect(response.body).to have_content("iClicker1 for sale")
+    #   # expect(response).to 
+    # end
+  end
+
   
   
   

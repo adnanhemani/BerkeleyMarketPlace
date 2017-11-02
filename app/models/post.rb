@@ -68,11 +68,20 @@ class Post < ActiveRecord::Base
     end
     
     def self.get_all_valid_posts
-       self.where(available:true).where("expire_time > ? OR expire_time IS ?", Time.now, nil) 
+        self.where(available:true).where("expire_time > ? OR expire_time IS ?", Time.now, nil) 
+    end
+    
+    def self.get_searched_posts(search_terms)
+        self.where(available:true).where("expire_time > ? OR expire_time IS ?", Time.now, nil).where("title ILIKE :s OR category ILIKE :s OR subcategory ILIKE :s OR description ILIKE :s", {:s => "%#{search_terms.downcase}%"})
     end
     
     def self.get_user_posts user_id
         result = self.where(author_id: user_id)
+    end
+    
+    def self.get_release_timeseries
+        ps = self.select(:release_time, :category).sort.map { |po| {date: po.release_time.change(min:0), category: po.category} }
+        return ps.sort_by { |hsh| hsh[:date] }
     end
 
 end

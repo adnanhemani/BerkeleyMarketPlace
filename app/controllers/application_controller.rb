@@ -6,7 +6,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception unless Rails.env.test?
   # protect_from_forgery with: :null_session
   
-  helper_method :current_user, :check_superuser, :safe_url
+  helper_method :current_user, :check_superuser, :safe_url, :can_visit_before_login
+  
+  before_filter :is_logged_in
+  
+  
+  def can_visit_before_login
+    (request.path == "/") || (request.path =~ /auth/)
+  end
+  
+  def is_logged_in
+    if current_user.nil? && !can_visit_before_login
+      redirect_to("/")
+    end
+  end
 
   def current_user
     if Rails.env.test?
@@ -18,7 +31,7 @@ class ApplicationController < ActionController::Base
   
   def check_superuser
     if not current_user.superuser?
-      redirect_to controller: 'application', action: 'index', notice: "You are not allowed to access the page"
+      redirect_to("/", flash: { alert: "You are not allowed to access the page" })
     end
   end
   
