@@ -9,8 +9,6 @@ class PostsController < ApplicationController
     url
   end
   
-  
-  
   def post_params
     params.require(:post).permit(:title, :price, :description, :release_time,
     :expire_time,:author_id, :category, :subcategory, :available, :image)
@@ -20,6 +18,7 @@ class PostsController < ApplicationController
     id = params[:id]
     @post = Post.find(id)
     @user = User.find(@post.author_id)
+    @release_time_formatted = @post.release_time.strftime("(released %B %d, %Y, %I%p)")
   end
   
   def new
@@ -81,13 +80,11 @@ class PostsController < ApplicationController
     category = params[:category]
     subcategory = params[:subcategory]
     
-    # if params.has_key?(:search_terms) #user is trying to search something
-    #   posts = Post.get_searched_posts(params[:search_terms])
-    # else
-    #   posts = Post.get_all_valid_posts
-    # end
- 
-    posts = Post.get_all_valid_posts
+    if params[:search_terms]
+      posts = Post.get_searched_posts(params[:search_terms])
+    else
+      posts = Post.get_all_valid_posts
+    end
     
     if category
       posts = posts.where("category = ?", category)

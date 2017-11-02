@@ -71,9 +71,8 @@ class Post < ActiveRecord::Base
         self.where(available:true).where("expire_time > ? OR expire_time IS ?", Time.now, nil) 
     end
     
-    def self.get_searched_posts(search)
-        db_params = {:search => "%#{search}%"}
-        self.where(available:true).where("expire_time > ? OR expire_time IS ?", Time.now, nil).where("title LIKE :search OR category LIKE :search OR subcategory LIKE :search OR description LIKE :search", db_params)
+    def self.get_searched_posts(search_terms)
+        self.where(available:true).where("expire_time > ? OR expire_time IS ?", Time.now, nil).where("title ILIKE :s OR category ILIKE :s OR subcategory ILIKE :s OR description ILIKE :s", {:s => "%#{search_terms.downcase}%"})
     end
     
     def self.get_user_posts user_id
