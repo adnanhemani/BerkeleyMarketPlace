@@ -1,6 +1,5 @@
 When /^(?:|I )select "(.*)" from "(.*)"$/ do |value, field|
   select(value, :from => field)
-  # PostsController.update_form_subcategory
 end
 
 # When /^(?:|I )select "(.*)" from subcategory$/ do |value|
@@ -20,8 +19,3 @@ end
 When /^I wait (\d+) seconds?$/ do |seconds|
   sleep seconds.to_i
 end
-
-# Then /^I should have image in the field "(.*)"$/ do |field|
-#   file =  File.join(Rails.root, "public/images/post_default.png")
-#   assert file.exists()
-# end
