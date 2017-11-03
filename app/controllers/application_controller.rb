@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def index 
-    @posts = Post.get_all_valid_posts
+    # @posts = Post.get_all_valid_posts
     @paged_posts = Post.get_all_valid_posts.page params[:page]
     @categories = Post.get_categories
   end
@@ -21,9 +21,9 @@ class ApplicationController < ActionController::Base
   def filter
     category = params[:category]
     if category == "all"
-      @selected = Post.get_all_valid_posts
+      @selected = Post.get_all_valid_posts.page params[:page]
     else
-      @selected = Post.get_vaild_post(category)
+      @selected = Post.get_vaild_post(category).page params[:page]
     end
     respond_to do |format|
       format.js
