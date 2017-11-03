@@ -1,5 +1,18 @@
 class User < ActiveRecord::Base
-  
+  has_attached_file :image,
+                    :storage => :cloudinary,
+                    :cloudinary_credentials => Rails.root.join("config/cloudinary.yml"),
+                    :path => ':id/user/:style/:filename',
+                    :styles => {
+                        :thumb => "200x200#",
+                        :medium => "350x350#",
+                    },
+                    :default_url => "/images/post_default.png"
+                      
+                      
+  validates_attachment :image,
+                    content_type: { content_type: /\Aimage\/.*\z/ },
+                    size: { less_than: 1.megabyte }  
   
   @@superusers = [
     "yezhaoqin@berkeley.edu",
@@ -26,6 +39,7 @@ class User < ActiveRecord::Base
   
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      puts "received user:", auth.info
       user.provider = auth.provider
       user.uid = auth.uid
       user.name = auth.info.name
@@ -36,4 +50,7 @@ class User < ActiveRecord::Base
     end
   end
     
+  def self.get_test_user
+    self.first
+  end
 end

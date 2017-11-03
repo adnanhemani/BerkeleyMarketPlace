@@ -1,5 +1,14 @@
 class PostsController < ApplicationController
   
+  helper_method :safe_url
+
+  def safe_url url
+    if not(url.include? "https")
+      url = url.sub("http", "https")
+    end
+    url
+  end
+  
   def post_params
     params.require(:post).permit(:title, :price, :description, :release_time,
     :expire_time,:author_id, :category, :subcategory, :available, :image)
@@ -9,6 +18,7 @@ class PostsController < ApplicationController
     id = params[:id]
     @post = Post.find(id)
     @user = User.find(@post.author_id)
+    @release_time_formatted = @post.release_time.strftime("(released %B %d, %Y, %I%p)")
   end
   
   def new
@@ -25,6 +35,8 @@ class PostsController < ApplicationController
     params[:post][:available] = true
     params[:post][:author_id] = current_user.id
     @post = Post.new(post_params)
+    
+    #puts(current_user.id)
     
     if not @post.valid? # => false
       @error_message = @post.errors.messages
@@ -68,9 +80,13 @@ class PostsController < ApplicationController
     category = params[:category]
     subcategory = params[:subcategory]
     
-    posts = Post.get_all_valid_posts
+    if params[:search_terms]
+      posts = Post.get_searched_posts(params[:search_terms])
+    else
+      posts = Post.get_all_valid_posts
+    end
     
-    if subcategory
+    if category
       posts = posts.where("category = ?", category)
     end
     
@@ -80,7 +96,6 @@ class PostsController < ApplicationController
       @posts = posts
     end
   end
-  
   
   
   def edit
@@ -98,4 +113,12 @@ class PostsController < ApplicationController
       format.js
     end
   end
+  
+  def destroy
+    check_superuser
+    id = params[:id]
+    Post.destroy(id)
+    redirect_to("/", flash: { notice: "Post #{id} is removed from the database by admin"})
+  end
+
 end

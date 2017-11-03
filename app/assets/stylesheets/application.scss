@@ -1,6 +1,6 @@
 
 @import "bootstrap";
-
+@import "d3_timeseries";
 @import "login";
 
 #pageContent {
@@ -62,4 +62,10 @@
     vertical-align: top;
     position: relative;
     width: 100%;
+}
+    
+#adminPage {
+    h2 {
+        margin: 50px 20px;
+    }
 }
