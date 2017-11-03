@@ -25,6 +25,11 @@ end
 #   assert file.exists()
 # end
 
+And /^I should see the field "(.*)" is empty$/ do |field|
+  # expect(find_field(field).value).to eq ""
+  expect(find("#post_subcategory").value).to eq ""
+end
+
 Then /^(?:|I )should not see any posts$/ do
   page.should have_no_css('div.card')
 end

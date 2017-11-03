@@ -17,6 +17,7 @@ Scenario: create a post
   And I fill in "Title" with "Jack Ye"
   And I fill in "Price" with "1"
   And I fill in "Description" with "In good quality"
+  And I should see the field "Subcategory" is empty
   When I select "item" from "Category"
   # And I wait 1 seconds
   # Then I select "book" from subcategory
