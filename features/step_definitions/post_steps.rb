@@ -1,4 +1,7 @@
 When /^(?:|I )select "(.*)" from "(.*)"$/ do |value, field|
+  if field == "Subcategory" && value == "book"
+    expect(find_field(field).text).to eq "book"
+  end
   select(value, :from => field)
 end
 
