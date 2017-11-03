@@ -56,6 +56,14 @@
     padding: 10px;
 }
 
+#pagination {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+    position: relative;
+    width: 100%;
+}
+    
 #adminPage {
     h2 {
         margin: 50px 20px;

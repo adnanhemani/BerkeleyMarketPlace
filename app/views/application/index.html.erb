@@ -6,7 +6,23 @@
     </div>
     
     <div class="col-lg-10">
-      <%= render partial: 'layouts/posts_grid', locals: {posts: @posts} %>
+      <%= render partial: 'layouts/posts_grid', locals: {posts: @paged_posts} %>
+    </div>
+    
+    
+    
+  </div>
+  
+  <div class="row text-center">
+    <div class="col-5"></div>
+    <div class="col-3">
+      <%= paginate @paged_posts, id: "pagination" %>
+      <div>
+        <%= page_entries_info @paged_posts, entry_name: 'item' %>
+      </div>
     </div>
   </div>
+  
+  
+  
 </div>
