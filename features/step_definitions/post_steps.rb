@@ -1,4 +1,6 @@
 When /^(?:|I )select "(.*)" from "(.*)"$/ do |value, field|
+  page.should have_content (value)
+  #expect(find_field(field).text).to eq "book"
   select(value, :from => field)
   # PostsController.update_form_subcategory
 end

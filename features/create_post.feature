@@ -42,6 +42,7 @@ Scenario: didn't upload image - sad path
   When I press "Create Post"
   Then I should see "Please upload an image"
 
+#@culerity
 Scenario: didn't emter number for prices - sad path
   Given I am on the create page
   Then I attach the file to "Image"
@@ -49,8 +50,8 @@ Scenario: didn't emter number for prices - sad path
   And I fill in "Price" with "aha"
   And I fill in "Description" with "In bad quality"
   And I select "item" from "Category"
-  # And I wait 10 seconds
-  # Then I select "book" from "Subcategory"
+  #And I wait 1 seconds
+  #Then I select "book" from "Subcategory"
   Then I select "please select subcategory" from "Subcategory"
   When I press "Create Post"
   Then I should see "Please enter a valid price."

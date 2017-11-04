@@ -62,7 +62,7 @@ class PostsController < ApplicationController
   def update_form_subcategory
     category = params[:category]
     
-    if category == ""  # empty string, selected nothing
+    if category == "" or nil # empty string, selected nothing
       @selected_subcategory = Post.get_empty_subcategory
     else
       @selected_subcategory = Post.get_subcategories(category)

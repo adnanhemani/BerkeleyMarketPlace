@@ -101,7 +101,52 @@ RSpec.describe PostsController, type: :controller do
       id = @post.id
       expect(response).to redirect_to("/posts/" + id.to_s)
     end
+    
+    # it "will change subcategory if we select certain category" do
+    #   get :update_form_subcategory
+    #   #expect(params[:category]).to eq ''
+    # end
+    
   end
+  
+  
+  describe "can delete post as an admin" do
+    before :each do
+      superuser_email = User.superusers.sample
+      OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+        "provider" => "google_oauth2",
+        "uid" => "-999",
+        "info" => {
+          "name" => "Test User",
+          "email" => superuser_email,
+        },
+        "credentials" => {
+          "token" => "TEST_TOKEN",
+          "refresh_token" => "TEST_REFRESH_TOKEN",
+          "expires_at" => 32503680000, # 3000/1/1
+          "expires" => true
+        }
+      })
+    end
+    
+    it "can destroy certain post" do
+      post :create, post: { 
+          :title => 'Sample Post', 
+          :price => '233', 
+          :description => 'Sample Post Description',
+          :category => 'item',
+          :subcategory => 'book',
+          :image => Rack::Test::UploadedFile.new('spec/controllers/images/doge.png', 'image/png')
+      }
+      @post = Post.last
+      id = @post.id
+      post :destroy, :id => id
+      expect(response).to redirect_to("/")
+    end
+    
+  end
+
+  
   
   describe 'searching certain item' do
     before :each do
