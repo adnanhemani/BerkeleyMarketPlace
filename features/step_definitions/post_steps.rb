@@ -1,16 +1,13 @@
 When /^(?:|I )select "(.*)" from "(.*)"$/ do |value, field|
   select(value, :from => field)
-  # PostsController.update_form_subcategory
 end
-
-# When /^(?:|I )select "(.*)" from subcategory$/ do |value|
-  
-#   page.find_by_id('post_subcategory').find("option[value='book']").select_option
-#     # select value, :from => field
-# end
 
 Then /^(?:|I )should see "(.*)" in the field "(.*)"$/ do |val, field|
     expect(find_field(field).value).to eq val
+end
+
+Then /^(?:|I )should not see "(.*)" in the field "(.*)"$/ do |val, field|
+    expect(find_field(field).value).not_to eq val
 end
 
 Then /^(?:|I )attach the file to "(.*)"$/ do |field|
@@ -33,18 +30,17 @@ When /I create a test post/ do
     When I press "Create Post"
     Then I should be on the details page for "Jack Ye"
   }
-  
 end 
+
+When /^I press "([^"])" for the test post$/ do |button|
+  # @post = Post.last
+  # pending
+end
 
 Then /the post does not exists any more/ do
   
   expect()
 end
-
-# Then /^I should have image in the field "(.*)"$/ do |field|
-#   file =  File.join(Rails.root, "public/images/post_default.png")
-#   assert file.exists()
-# end
 
 Then("I should see {int} pages of results") do |num_pages|
     expect(page).to have_link("Last", href: "/posts?page=%s&search_terms=" %num_pages)
