@@ -9,3 +9,7 @@ end
 And /^(?:|I )should see "([^"]*)" under each post$/ do |button|
     #pending
 end
+
+When /^(?:|I )press "([^"]*)" for the post contains "(.*)"$/ do |button, title|
+    # pending
+end
