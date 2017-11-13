@@ -17,9 +17,6 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy', as: 'logout'
   
   # user
-  get "/user/profile", to:"users#profile"
-  post "/user/profile", to:"users#update_profile_pic"
-  get "/user/mypost", to:"users#mypost"
   get '/admin', to: 'users#admin', as: 'admin'
   
   # ajax calls
@@ -31,4 +28,5 @@ Rails.application.routes.draw do
   post "/user/profile", to:"users#update_profile_pic"
   get "/user/mypost", to:"users#mypost"
   get '/user/posts/:id', to: 'posts#show'
+  get "/user/mywishlist", to:"users#mywishlist"
 end

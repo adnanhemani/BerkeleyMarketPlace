@@ -24,7 +24,8 @@ class Post < ActiveRecord::Base
                      content_type: { content_type: /\Aimage\/.*\z/ },
                      size: { less_than: 1.megabyte }
 
-        
+    belongs_to :wishlist
+
     @@categories = {
         item: [
             "book",

@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
                     content_type: { content_type: /\Aimage\/.*\z/ },
                     size: { less_than: 1.megabyte }  
   
+  has_one :wishlist
+  
   def superuser?
     admins = User.where(admin:true)
     admins.exists?(email: email)
