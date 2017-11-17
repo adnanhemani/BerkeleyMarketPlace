@@ -38,6 +38,12 @@ When /^(?:|I )press "([^"]*)"$/ do |button|
   click_on(button)
 end
 
+When /^(?:|I )press "([^"]*)" for my last post$/ do |button|
+  #click_on(button)
+  all('.card').last.click_link(button)
+  #last(".card").click_link(button)
+end
+
 When /^(?:|I )follow "([^"]*)"$/ do |link|
   Rails.logger.debug "************* %s **************" % link
   Rails.logger.debug page.body

@@ -10,6 +10,12 @@
 #     #pending
 # end
 
-When /I press "([^"]*)" for the test post$/ do |button|
-    # pending
+# When /I press "([^"]*)" for the test post$/ do |button|
+#     # pending
+# end
+
+Given /I create a test post/ do |post_table|
+  post_table.hashes.each do |post|
+    Post.create post
+  end
 end
