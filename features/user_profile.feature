@@ -20,11 +20,11 @@ Background:
   When I press "Create Post"
   Then I should be on the details page for "Jack Ye"
   
-Scenario: direct to user profile page
-  Given I am on the home page
-  When I press "seed-user 1"
-  Then I should be on the user page
-  Then I should see "seed-user1@berkeley.edu"
+# Scenario: direct to user profile page
+#   Given I am on the home page
+#   When I press "seed-user 1"
+#   Then I should be on the user page
+#   Then I should see "seed-user1@berkeley.edu"
 
 Scenario: upload profile image
   Given I am on the user page
