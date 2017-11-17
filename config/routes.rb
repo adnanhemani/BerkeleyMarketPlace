@@ -4,12 +4,15 @@ Rails.application.routes.draw do
   root 'application#index'
 
   # resources
-  resources :posts, except: [:destroy]
+  resources :posts, except: [:destroy] do
+    resources :wishs
+  end
   resources :users
   resources :sessions, only: [:create, :destroy]
   
   # posts
   get 'posts/:id/destroy', to: 'posts#destroy', as: 'post_destroy'
+  #get '/posts/:id/add_to_wishlist', to:'wishs#create'
   
   # authentication
   get 'auth/:provider/callback', to: 'sessions#create'

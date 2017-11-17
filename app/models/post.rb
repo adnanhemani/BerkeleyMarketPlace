@@ -23,8 +23,10 @@ class Post < ActiveRecord::Base
     validates_attachment :image,
                      content_type: { content_type: /\Aimage\/.*\z/ },
                      size: { less_than: 1.megabyte }
-
-    belongs_to :wishlist
+    
+    has_many :wish_users, :through => :wishs, :source => :user
+    has_many :wishs
+    belongs_to :user, :foreign_key => "author_id"
 
     @@categories = {
         item: [
