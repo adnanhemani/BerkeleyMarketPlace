@@ -9,17 +9,15 @@
         
         <%= form_for :user, :method => :post, :html => { :multipart => true } do |f| %>
         <div class="form-group">
-          
             <h4 class="my-4">Profile Image</h1>
-            <div id="imagePreview" class="form-group">
-              <img><%= image_tag @profile_img, class: "img-fluid", alt: "Responsive image", width:  "350"%></img>  
-            </div>
+            <label for="user_image">
+              <div id="imagePreview" class="form-group">
+                <img><%= image_tag @profile_img,  id: "Profile Image", class: "img-fluid", alt: "Responsive image", width:  "350"%></img>  
+              </div>
+            </label>
+            <%= f.file_field :image, id: "user_image", style: "display:block", required: true%>
             
             <div class="form-row">
-              <div class="col-4">
-                <%= f.file_field :image, id: "Profile Image", class: "form-control", required: true %>
-
-              </div>
               <div class="col">
                 <%= f.submit "Save", class:"btn btn-primary" %>
               </div>
@@ -40,8 +38,13 @@
 </div>
 
 
-
 <script>
+$(function() {
+    $('#imagePreview').on('click', function() {
+        $('#profile-image-upload').click();
+    });
+});
+
 $(function() {
   $('#user_image').on('change', function(event) {
     var files = event.target.files;

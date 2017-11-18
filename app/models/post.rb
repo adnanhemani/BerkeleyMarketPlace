@@ -108,7 +108,7 @@ class Post < ActiveRecord::Base
             end
         end
     }
-    
+
     def self.complete_filterrific_params incomplete_params
         
         if incomplete_params.nil?

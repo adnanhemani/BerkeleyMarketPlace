@@ -18,14 +18,16 @@
     <div class="col-4">
       <div class="form-group">
         <%= f.label :image %>
-        <div id="imagePreview" class="form-group">
-        <img src="/images/post_default.png" class="img-fluid" alt="Responsive image">
-        </div>
-        <%= f.file_field :image, id: "Image", class: "form-control", required: true %>
+        <label for="Image">
+          <div id="imagePreview" class="form-group">
+            <img src="/images/post_default.png" class="img-fluid" alt="Responsive image">
+          </div>
+        </label>
+        <%= f.file_field :image, id: "Image", style: "display:block", required: true %>
       </div>
     </div>  
   	<!--image-->
-  	
+
   	<div class="col-6">    
       
       <div class="form-group">
@@ -79,8 +81,13 @@
 <% end %>
 </div>
 
-
 <script>
+$(function() {
+    $('#imagePreview').on('click', function() {
+        $('#profile-image-upload').click();
+    });
+});
+
 $('#post_category').change(function() {
 
   var category = $(this).val();
