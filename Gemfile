@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.3.4'
 
 gem 'rails', '4.2.6'
-
+gem 'simplecov-cobertura'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

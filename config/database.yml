@@ -1,7 +1,3 @@
 test:
   adapter: postgresql
   database: travis_ci_test
-
-development:
-  adapter: postgresql
-  database: my_app_development
